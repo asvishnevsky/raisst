@@ -28,6 +28,6 @@ Follow steps listed in task descriptions in each of tasks subfolder.
 
 Demo
 
-Open link in any web-browser with JavaScript support: https://sonified.vision/disasm.htm 
+Open link in any web-browser with JavaScript support: https://sonified.vision/disasm.html
 or upload files from web_demo to your web server 
 then try commands listed in task1 description in web interface.

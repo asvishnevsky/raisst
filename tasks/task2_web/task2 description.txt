@@ -1,0 +1,27 @@
+Task2: Find vulnerable JS Script using NodeJsScan
+
+1. Create folder to store files related to this task
+	mkdir js
+	cd js
+
+2. Download and setup vulnerability scanner NodeJsScan
+	git clone https://github.com/ajinabraham/nodejsscan.git
+	cd nodejsscan
+	python3 -m venv venv
+	source venv/bin/activate
+	pip install -r requirements.txt
+
+3. Recreated database for NodeJsScan
+	vim nodejsscan/settings.py 
+	comment #SQLALCHEMY_DATABASE_URI = 'postgresql://127.0.0.1/nodejsscan' and type
+	SQLALCHEMY_DATABASE_URI = 'postgresql://YOURUSERNAME:YOURDBPASSWORD@127.0.0.1:5432/nodejsscan'
+	wq
+	python3 manage.py recreate-db
+
+4. Download target vulnerable repository to be scanned
+	mkdir code
+	cd code
+	git clone https://github.com/cr0hn/vulnerable-node.git
+	njsscan vulnerable-node/
+
+5. Find vulnerability types and line numbers in NodeJsScan output

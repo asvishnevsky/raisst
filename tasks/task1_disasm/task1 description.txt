@@ -1,0 +1,44 @@
+Task1: Find password in Crackme using Radare2
+
+1. Compile crackme source code to achieve a.out executable
+For examlple, 
+	clang main.c
+or
+	gcc main.c
+
+or download prebuild a.out binary using wget and make it executable
+	wget https://sonified.vision/a.out
+	chmod +x a.out
+
+2. Create folder
+	mkdir disasm && cd disasm
+
+3. Clone and install disassembler
+	git clone https://github.com/radareorg/radare2
+	radare2/sys/user.sh
+
+4. Launch crackme
+	./a.out
+
+5. Intup any password and remember the output
+	Enter password 123 
+
+6. Open crackme in disassembler
+	radare2/binr/radare2/radare2 
+
+7. Look for outputted strings
+	iz | grep Wrong
+	aa
+	axt 0x00000877
+
+8. Investigate the usage of outputted strings
+	s main
+	pd 25
+	s str.p_sSw0rd
+	px
+
+9. You will have the required password in plaintext
+
+10. Relaunch a.out and input password found in disassembler
+
+11. If you see "Success" message, then you completely solved this task.

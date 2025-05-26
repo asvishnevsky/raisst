@@ -1,0 +1,27 @@
+Task3: Find malicious URL using ML and Python
+
+1. Create folder for this task
+	mkdir ml && cd ml
+
+2. Download dataset and solution in Python from Kaggle https://www.kaggle.com/code/hamzamanssor/detection-malicious-url-using-ml-models
+
+3. Save solution with name data-science.py
+
+3. Create and activate virtual environment for Python script
+	python3 -m venv venv
+	source venv/bin/activate
+
+4. Install dependences
+	pip3 install -U scikit-learn pandas seaborn colorama tld
+
+5. Launch the saved Python script from Kaggle
+	python data-science.py
+
+6. Find the best model in the Python script output. The output will look like	
+	###################- End -###################                          
+	Model  Accuracy
+	Decision Tree Classifier  0.909605
+	Random Forest Classifier  0.914849
+	AdaBoost Classifier  0.820062
+
+7. The best model should be Random Forest Classifier with 91% accuracy

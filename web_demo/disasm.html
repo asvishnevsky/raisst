@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Information Security Accessibility</title>
+<style type="text/css">
+
+body {
+   font-size: 1.5rem;
+}
+
+input[type="text"]
+{
+    font-size: 1.5rem;
+}
+
+textarea  
+{  
+   font-size: 1.5rem;   
+}
+</style>
+
+</head>
+<body>
+
+<p><b>user@linux_server:~$</b><br>
+	<input type="text" name="input_text" id="textbox_id" size="80">
+</p>
+<p><b>output:</b><br>
+	<textarea id='textarea_id' name='output' cols='80' rows='30'></textarea>
+</p>
+
+</body>
+
+<script type="text/javascript">
+	
+	const node = document.getElementById('textbox_id')
+	const out_node = document.getElementById('textarea_id')
+
+	let crackme_opened = false
+
+	node.addEventListener("keydown", function(e) {
+		if (e.key === "Enter" && !crackme_opened) {
+			let cmd = document.getElementById('textbox_id').value;
+			
+			// out_node.value = cmd
+			switch(cmd) {
+				case 'ls':
+					out_node.value = 
+`
+user@linux_server:~$ ls
+disasm  js  main.py  malicious_phish.csv  sysdig.log  venv
+user@linux_server:~$
+`
+					node.value = ''
+					break
+
+				case 'cd disasm':
+					out_node.value = 
+`
+user@linux_server:~$ cd disasm/
+user@linux_server:~/disasm$
+`
+					node.value = ''
+					break
+
+				case 'git clone https://github.com/radareorg/radare2':
+					out_node.value = 
+
+`
+user@linux_server:~/disasm$ git clone https://github.com/radareorg/radare2
+Cloning into 'radare2'...
+remote: Enumerating objects: 294795, done.
+remote: Counting objects: 100% (135/135), done.
+remote: Compressing objects: 100% (80/80), done.
+remote: Total 294795 (delta 65), reused 99 (delta 55), pack-reused 294660
+Receiving objects: 100% (294795/294795), 170.46 MiB | 11.02 MiB/s, done.
+Resolving deltas: 100% (231912/231912), done.
+Updating files: 100% (4459/4459), done.
+user@linux_server:~/disasm$
+`
+					node.value = ''
+					break					
+				case 'radare2/sys/user.sh':
+					out_node.value = 
+`
+user@linux_server:~/disasm$ radare2/sys/user.sh
+WARNING: Updating from remote repository                                                                                                                                                      From https://github.com/radareorg/radare2
+ * branch                  master     -> FETCH_HEAD
+Already up to date.
+Building on Linux : computing number of allowed parallel jobs.
+Maximum allowed RAM memory per job is 150000 kB.
+Number of CPUs is 1 and current free RAM allows us to run 10 jobs in parallel.
+So, the build will run on 1 job(s).
+/home/user/disasm/radare2
+./configure --with-rpath --with-rpath --prefix=/home/user/.local
+configure-plugins: Copying dist/plugins-cfg/plugins.def.cfg
+configure-plugins: Loading ./plugins.cfg ..
+configure-plugins: Generating libr/config.h
+configure-plugins: Generating libr/asm/d/config.inc
+configure-plugins: Generating libr/config.mk
+SHARED: io.shm
+
+þþþ
+gmake[1]: Leaving directory '/home/user/disasm/radare2/libr/arch/d'
+cd libr && gmake install-symlink
+gmake[1]: Entering directory '/home/user/disasm/radare2/libr'
+gmake[2]: Entering directory '/home/user/disasm/radare2'
+mkdir -p "/home/user/.local/lib/pkgconfig"
+for FILE in r_anal.pc r_arch.pc r_asm.pc r_bin.pc r_bp.pc r_config.pc r_cons.pc r_core.pc r_crypto.pc r_debug.pc r_egg.pc r_esil.pc r_flag.pc r_fs.pc r_io.pc r_lang.pc r_magic.pc r_reg.pc r_search.pc r_socket.pc r_syscall.pc r_util.pc ; do \
+        ln -fs "/home/user/disasm/radare2/pkgcfg/$FILE" "/home/user/.local/lib/pkgconfig/$FILE" ; done
+gmake[2]: Leaving directory '/home/user/disasm/radare2'
+gmake[1]: Leaving directory '/home/user/disasm/radare2/libr'
+cd binr && gmake install-symlink
+gmake[1]: Entering directory '/home/user/disasm/radare2/binr'
+cd .. && \
+mkdir -p "/home/user/.local/bin" && \
+for BINARY in r2r r2pm ravc2 rax2 rasm2 rabin2 rahash2 radiff2 radare2 rafind2 rarun2 ragg2 r2agent rasign2 ; do ln -fs "/home/user/disasm/radare2/binr/$BINARY/$BINARY" "/home/user/.local/bin/$BINARY" ; done
+cd .. && ln -fs "/home/user/disasm/radare2/binr/r2pm/r2pm" "/home/user/.local/bin/r2pm"
+cd .. && rm -rf "/home/user/.local/share/radare2/5.9.3/r2pm"
+cd .. && mkdir -p "/home/user/.local/share/radare2/5.9.3/"
+rm -f "/home/user/.local/bin/r2"
+cd .. && ln -fs "/home/user/disasm/radare2/binr/radare2/radare2" "/home/user/.local/bin/r2"
+cd .. && ln -fs "/home/user/.local/bin/radare2" "/home/user/.local/bin/r2p"
+cd .. && ln -fs "/home/user/disasm/radare2/binr/preload/libr2.so" "/home/user/.local/lib/libr2.so"
+cd .. && cd "/home/user/.local/lib" && \
+        mv libr2.so libr2.so.5.9.3 && \
+        ln -fs libr2.so.5.9.3 libr2.so
+gmake[1]: Leaving directory '/home/user/disasm/radare2/binr'
+cd shlr && gmake install-symlink
+gmake[1]: Entering directory '/home/user/disasm/radare2/shlr'
+mkdir -p "/home/user/.local/lib"
+#cd tcc ; for FILE in libr_tcc* ; do \
+#       ln -fs \`pwd\`/$FILE /home/user/.local/lib/$FILE ; done
+gmake[1]: Leaving directory '/home/user/disasm/radare2/shlr'
+mkdir -p "/home/user/.local/bin"
+ln -fs "/home/user/disasm/radare2/sys/indent.sh" "/home/user/.local/bin/r2-indent"
+mkdir -p "/home/user/.local/share/radare2/5.9.3/hud"
+ln -fs "/home/user/disasm/radare2/doc/hud" "/home/user/.local/share/radare2/5.9.3/hud/main"
+#mkdir -p "/home/user/.local/share/radare2/5.9.3/flag"
+#ln -fs /home/user/disasm/radare2/libr/flag/d/tags.r2 "/home/user/.local/share/radare2/5.9.3/flag/tags.r2"
+cd "/home/user/.local/lib/radare2/" && rm -f last && ln -fs 5.9.3 last
+cd "/home/user/.local/share/radare2/" && rm -f last && ln -fs 5.9.3 last
+mkdir -p "/home/user/.local/share/radare2/5.9.3/"
+/bin/sh ./configure-plugins --rm-static //home/user/.local/lib/radare2/last/
+configure-plugins: Loading ./plugins.cfg ..
+Removed 0 shared plugins that are already static
+
+radare2 is now installed in /home/user/.local
+
+export PATH=/home/user/.local/bin:$PATH
+
+user@linux_server:~/disasm$
+`
+					node.value = ''
+					break
+				case "wget https://sonified.vision/a.out":
+					out_node.value =
+`
+user@linux_server:~/disasm$ wget https://sonified.vision/a.out
+--2024-07-04 21:16:39--  https://sonified.vision/a.out
+Resolving sonified.vision (sonified.vision)... 89.223.127.87
+Connecting to sonified.vision (sonified.vision)|89.223.127.87|:443... connected.
+HTTP request sent, awaiting response... 301 Moved Permanently
+Location: https://www.sonified.vision/a.out [following]
+--2024-07-04 21:16:39--  https://www.sonified.vision/a.out
+Resolving www.sonified.vision (www.sonified.vision)... 89.223.127.87
+Connecting to www.sonified.vision (www.sonified.vision)|89.223.127.87|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 8440 (8.2K) [application/octet-stream]
+Saving to: ‘a.out’
+
+a.out                                           100%[=====================================================================================================>]   8.24K  --.-KB/s    in 0s
+
+2024-07-04 21:16:39 (122 MB/s) - ‘a.out’ saved [8440/8440]
+
+user@linux_server:~/disasm$
+`
+					node.value = ''
+					break	
+				case 'chmod +x a.out':
+					out_node.value =
+`
+user@linux_server:~/disasm$ chmod +x a.out
+user@linux_server:~/disasm$
+`
+					node.value = ''
+					break
+				case './a.out':
+					out_node.value = 
+`
+user@linux_server:~/disasm$ ./a.out
+Enter password
+`
+					node.value = ''
+					crackme_opened = true
+					break
+				case 'radare2/binr/radare2/radare2 a.out':
+					out_node.value = 
+`
+user@linux_server:~/disasm$ radare2/binr/radare2/radare2 a.out
+WARN: Relocs has not been applied. Please use \`-e bin.relocs.apply=true\` or \`-e bin.cache=true\` next time
+ -- Press 'C' in visual mode to toggle colors
+[0x00000630]>
+`
+					node.value = ''
+					break
+				case 'iz | grep Wrong':
+					out_node.value =
+`
+[0x00000630]> iz | grep Wrong
+3   0x00000877 0x00000877 14  15   .rodata ascii Wrong password
+[0x00000630]>
+`
+					node.value = ''
+					break
+				case 'aa':
+					out_node.value = 
+`
+[0x00000630]> aa
+INFO: Analyze all flags starting with sym. and entry0 (aa)
+INFO: Analyze imports (af@@@i)
+INFO: Analyze entrypoint (af@ entry0)
+INFO: Analyze symbols (af@@@s)
+INFO: Recovering variables (afva@@@F)
+INFO: Analyze all functions arguments/locals (afva@@@F)
+[0x00000630]>
+`
+					node.value = ''
+					break
+				case 'axt 0x00000877':
+					out_node.value = 
+`
+[0x00000630]> axt 0x00000877
+main 0x7a9 [DATA:r--] lea rdi, str.Wrong_password
+[0x00000630]>
+`
+					node.value = ''
+					break
+				case 's main':
+					out_node.value = 
+`
+[0x00000630]> s main
+[0x0000073a]>
+`
+					node.value = ''
+					break
+				case 'pd 25':
+					out_node.value = 
+`
+[0x0000073a]> pd 25
+            ; DATA XREF from entry0 @ 0x64d(r)
+┌ 150: int main (int argc, char **argv, char **envp);
+│           ; var int64_t var_8h @ rbp-0x8
+│           ; var int64_t var_50h @ rbp-0x50
+│           ; var int64_t var_51h @ rbp-0x51
+│           0x0000073a      55             push rbp
+│           0x0000073b      4889e5         mov rbp, rsp
+│           0x0000073e      4883ec60       sub rsp, 0x60
+│           0x00000742      64488b0425..   mov rax, qword fs:[0x28]
+│           0x0000074b      488945f8       mov qword [var_8h], rax
+│           0x0000074f      31c0           xor eax, eax
+│           0x00000751      488d3dfc00..   lea rdi, str.Enter_password ; 0x854 ; "Enter password"
+│           0x00000758      e883feffff     call sym.imp.puts           ; int puts(const char *s)
+│           0x0000075d      488d45b0       lea rax, [var_50h]
+│           0x00000761      4889c6         mov rsi, rax
+│           0x00000764      488d3df800..   lea rdi, [0x00000863]       ; "%s"
+│           0x0000076b      b800000000     mov eax, 0
+│           0x00000770      e89bfeffff     call sym.imp.scanf          ; int scanf(const char *format)
+│           0x00000775      488d45b0       lea rax, [var_50h]
+│           0x00000779      4889c6         mov rsi, rax
+│           0x0000077c      488d3de300..   lea rdi, str.p_sSword       ; 0x866 ; "p@sSword"
+│           0x00000783      e878feffff     call sym.imp.strcmp         ; int strcmp(const char *s1, const char *s2)
+│           0x00000788      85c0           test eax, eax
+│           0x0000078a      0f95c0         setne al
+│           0x0000078d      8845af         mov byte [var_51h], al
+│           0x00000790      0fb645af       movzx eax, byte [var_51h]
+│           0x00000794      83f001         xor eax, 1
+│           0x00000797      84c0           test al, al
+│       ┌─< 0x00000799      740e           je 0x7a9
+│       │   0x0000079b      488d3dcd00..   lea rdi, str.Success        ; 0x86f ; "Success"
+[0x0000073a]>
+`
+					node.value = ''
+					break
+				case 's str.p_sSword':
+					out_node.value = 
+`
+[0x00000866]> s str.p_sSword
+[0x00000866]>
+`
+					node.value = ''
+					break
+				case 'px':
+					out_node.value = 
+`
+[0x00000866]> px
+- offset -  6667 6869 6A6B 6C6D 6E6F 7071 7273 7475  6789ABCDEF012345
+0x00000866  6b41 6d45 7240 7461 0053 7563 6365 7373  p_sSword.Success
+0x00000876  0057 726f 6e67 2070 6173 7377 6f72 6400  .Wrong password.
+0x00000886  0000 011b 033b 3c00 0000 0600 0000 48fd  .....;<.......H.
+0x00000896  ffff 8800 0000 98fd ffff b000 0000 a8fd  ................
+0x000008a6  ffff 5800 0000 b2fe ffff c800 0000 48ff  ..X...........H.
+0x000008b6  ffff e800 0000 b8ff ffff 3001 0000 0000  ..........0.....
+0x000008c6  0000 1400 0000 0000 0000 017a 5200 0178  ...........zR..x
+0x000008d6  1001 1b0c 0708 9001 0710 1400 0000 1c00  ................
+0x000008e6  0000 48fd ffff 2b00 0000 0000 0000 0000  ..H...+.........
+0x000008f6  0000 1400 0000 0000 0000 017a 5200 0178  ...........zR..x
+0x00000906  1001 1b0c 0708 9001 0000 2400 0000 1c00  ..........$.....
+0x00000916  0000 b8fc ffff 5000 0000 000e 1046 0e18  ......P......F..
+0x00000926  4a0f 0b77 0880 003f 1a3b 2a33 2422 0000  J..w...?.;*3$"..
+0x00000936  0000 1400 0000 4400 0000 e0fc ffff 0800  ......D.........
+0x00000946  0000 0000 0000 0000 0000 1c00 0000 5c00  ..............\.
+0x00000956  0000 e2fd ffff 9600 0000 0041 0e10 8602  ...........A....
+[0x00000866]>
+`
+					node.value = ''
+					break
+				case 'q':
+					out_node.value = 
+`
+[0x00000866]> q
+user@linux_server:~/disasm$
+`
+					node.value = ''
+					break
+				default:
+					out_node.value = 
+`Unknown command "` + cmd + `"`
+					node.value = ''
+					break
+			}
+
+		} else if (e.key === "Enter" && crackme_opened) {
+			let cmd = document.getElementById('textbox_id').value;
+
+			switch(cmd) {
+				case 'p@sSword':
+					out_node.value = 'Success'
+					crackme_opened = false
+					node.value = ''
+					break
+				default:
+					out_node.value = 'Wrong_password'
+					crackme_opened = false
+					node.value = ''
+					break
+			}
+		}
+
+		
+	})
+</script>
+</html>
